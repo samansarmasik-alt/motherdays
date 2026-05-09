@@ -1,176 +1,160 @@
 (() => {
-    'use strict';
+    "use strict";
 
-    /* ======================
-       TRANSLATIONS
-       ====================== */
-    const i18n = {
+    /* ═══════════════════════
+       i18n — TRANSLATIONS
+       ═══════════════════════ */
+    const L = {
         tr: {
-            hero_tag:       "— Anneler Günü Özel —",
-            hero_title:     "Canım<br>Annem",
-            hero_sub:       "Senin sevginle her gün bahar.",
-            hero_cta:       "Sürprizi Gör",
-            card_front:     "Senin İçin Bir Mesajım Var",
-            open_card:      "Kartı Aç",
-            card_back_title:"Anneler Günün<br>Kutlu Olsun!",
-            card_message:   "Akıllı değildin ama beni mutlu ettin",
-            signature:      "— Sonsuz Sevgilerle, Senin Yavrun",
-            close_card:     "Kapat",
-            reasons_title:  "Seni Neden Çok Seviyorum?",
-            r1_title:       "Sonsuz Şefkatin",
-            r1_desc:        "Dizim her kanadığında, kalbim her kırıldığında yanımda olan tek kişi sensin.",
-            r2_title:       "Eşsiz Bilgeliğin",
-            r2_desc:        "Hayatın her anında bana doğru yolu gösteren ışığımsın.",
-            r3_title:       "Gülen Yüzün",
-            r3_desc:        "Gülümsemenle en karanlık günlerimi bile aydınlatıyorsun.",
-            gallery_title:  "Güzel Anılar",
-            gallery_text:   "Seninle geçen her saniye, kalbimde sakladığım en değerli hazinem.",
-            footer:         "&copy; 2026 — Dünyanın En İyi Annesine Sevgilerle"
+            label:    "— Anneler Günü Özel —",
+            title:    "Canım<br>Annem",
+            desc:     "Senin sevginle her gün bahar.",
+            cta:      "Sürprizi Gör ↓",
+            cf_title: "Senin İçin Bir Mesajım Var",
+            cf_btn:   "Kartı Aç",
+            cb_title: "Anneler Günün<br>Kutlu Olsun!",
+            cb_joke:  "Akıllı değildin ama beni mutlu ettin",
+            cb_sig:   "— Sonsuz Sevgilerle, Senin Yavrun",
+            cb_close: "Kapat",
+            why_title:"Seni Neden Çok Seviyorum?",
+            w1t: "Sonsuz Şefkatin",
+            w1d: "Dizim her kanadığında, kalbim her kırıldığında yanımda olan tek kişi sensin.",
+            w2t: "Eşsiz Bilgeliğin",
+            w2d: "Hayatın her anında bana doğru yolu gösteren ışığımsın.",
+            w3t: "Gülen Yüzün",
+            w3d: "Gülümsemenle en karanlık günlerimi bile aydınlatıyorsun.",
+            gal_title:"Güzel Anılar",
+            gal_quote:'"Seninle geçen her saniye, kalbimde sakladığım en değerli hazinem."',
+            footer:   "&copy; 2026 — Dünyanın En İyi Annesine Sevgilerle"
         },
         en: {
-            hero_tag:       "— Mother's Day Special —",
-            hero_title:     "My Dear<br>Mother",
-            hero_sub:       "With your love, every day is spring.",
-            hero_cta:       "See the Surprise",
-            card_front:     "I Have a Message for You",
-            open_card:      "Open Card",
-            card_back_title:"Happy<br>Mother's Day!",
-            card_message:   "You weren't smart but you made me happy",
-            signature:      "— With Infinite Love, Your Child",
-            close_card:     "Close",
-            reasons_title:  "Why Do I Love You So Much?",
-            r1_title:       "Infinite Compassion",
-            r1_desc:        "You are the only one by my side whenever my knee bleeds or my heart breaks.",
-            r2_title:       "Unique Wisdom",
-            r2_desc:        "You are my light showing me the right way in every moment of life.",
-            r3_title:       "Your Smiling Face",
-            r3_desc:        "You brighten even my darkest days with your smile.",
-            gallery_title:  "Beautiful Memories",
-            gallery_text:   "Every second spent with you is the most precious treasure I keep in my heart.",
-            footer:         "&copy; 2026 — To the World's Best Mother with Love"
+            label:    "— Mother's Day Special —",
+            title:    "My Dear<br>Mother",
+            desc:     "With your love, every day is spring.",
+            cta:      "See the Surprise ↓",
+            cf_title: "I Have a Message for You",
+            cf_btn:   "Open Card",
+            cb_title: "Happy<br>Mother's Day!",
+            cb_joke:  "You weren't smart but you made me happy",
+            cb_sig:   "— With Infinite Love, Your Child",
+            cb_close: "Close",
+            why_title:"Why Do I Love You So Much?",
+            w1t: "Infinite Compassion",
+            w1d: "You are the only one by my side whenever my knee bleeds or my heart breaks.",
+            w2t: "Unique Wisdom",
+            w2d: "You are my light showing me the right way in every moment of life.",
+            w3t: "Your Smiling Face",
+            w3d: "You brighten even my darkest days with your smile.",
+            gal_title:"Beautiful Memories",
+            gal_quote:'"Every second spent with you is the most precious treasure I keep in my heart."',
+            footer:   "&copy; 2026 — To the World's Best Mother with Love"
         }
     };
 
-    let lang = navigator.language.startsWith('tr') ? 'tr' : 'en';
+    let lang = navigator.language.startsWith("tr") ? "tr" : "en";
 
-    function applyLang() {
-        document.querySelectorAll('[data-i18n]').forEach(el => {
-            el.innerHTML = i18n[lang][el.dataset.i18n];
+    function setLang() {
+        document.querySelectorAll("[data-i18n]").forEach(el => {
+            const k = el.dataset.i18n;
+            if (L[lang][k]) el.innerHTML = L[lang][k];
         });
-        document.getElementById('lang-label').textContent = lang === 'tr' ? 'EN' : 'TR';
+        document.getElementById("lang-text").textContent = lang === "tr" ? "EN" : "TR";
     }
 
-    document.getElementById('lang-btn').addEventListener('click', () => {
-        lang = lang === 'tr' ? 'en' : 'tr';
-        applyLang();
-    });
+    document.getElementById("lang-btn").onclick = () => {
+        lang = lang === "tr" ? "en" : "tr";
+        setLang();
+    };
 
-    /* ======================
-       PETAL CANVAS (soft, GPU-accelerated)
-       ====================== */
-    const canvas = document.getElementById('petals-canvas');
-    const ctx = canvas.getContext('2d');
+    /* ═══════════════════════
+       CANVAS PETALS — soft & buttery
+       ═══════════════════════ */
+    const cvs = document.getElementById("petals");
+    const ctx = cvs.getContext("2d");
     let W, H;
 
-    function resize() {
-        W = canvas.width  = window.innerWidth;
-        H = canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
+    const resize = () => { W = cvs.width = innerWidth; H = cvs.height = innerHeight; };
+    addEventListener("resize", resize);
     resize();
 
-    const PETAL_COUNT = 35;
-    const petalColors = ['#f8bbd0','#f48fb1','#f06292','#ec407a','#fce4ec'];
+    const COLORS = ["#f8bbd0","#f48fb1","#f06292","#ec407a","#fce4ec","#fff0f3"];
+    const N = Math.min(40, Math.max(20, Math.floor(W / 40)));   // responsive count
 
-    class Petal {
-        constructor() { this.reset(true); }
-        reset(init) {
+    class P {
+        constructor(init) { this.r(init); }
+        r(init) {
             this.x  = Math.random() * W;
-            this.y  = init ? Math.random() * H : -20;
-            this.s  = Math.random() * 12 + 8;
-            this.vy = Math.random() * 0.6 + 0.3;
-            this.vx = Math.random() * 0.4 - 0.2;
-            this.a  = Math.random() * Math.PI * 2;
-            this.va = (Math.random() - 0.5) * 0.02;
-            this.o  = Math.random() * 0.4 + 0.2;
-            this.c  = petalColors[Math.random() * petalColors.length | 0];
+            this.y  = init ? Math.random() * H : -16;
+            this.s  = Math.random() * 10 + 7;
+            this.dy = Math.random() * .45 + .15;
+            this.dx = (Math.random() - .5) * .2;
+            this.a  = Math.random() * 6.28;
+            this.da = (Math.random() - .5) * .012;
+            this.o  = Math.random() * .3 + .15;
+            this.c  = COLORS[Math.random() * COLORS.length | 0];
         }
-        update() {
-            this.y += this.vy;
-            this.x += this.vx + Math.sin(this.a) * 0.3;
-            this.a += this.va;
-            if (this.y > H + 20) this.reset(false);
+        u() {
+            this.y += this.dy;
+            this.x += this.dx + Math.sin(this.a) * .25;
+            this.a += this.da;
+            if (this.y > H + 20) this.r(false);
         }
-        draw() {
+        d() {
             ctx.save();
             ctx.translate(this.x, this.y);
             ctx.rotate(this.a);
             ctx.globalAlpha = this.o;
             ctx.fillStyle = this.c;
             ctx.beginPath();
-            ctx.ellipse(0, 0, this.s * 0.4, this.s, 0, 0, Math.PI * 2);
+            ctx.ellipse(0, 0, this.s * .35, this.s, 0, 0, 6.28);
             ctx.fill();
             ctx.restore();
         }
     }
 
-    const petals = Array.from({ length: PETAL_COUNT }, () => new Petal());
+    const ps = Array.from({ length: N }, () => new P(true));
 
-    function animate() {
+    (function loop() {
         ctx.clearRect(0, 0, W, H);
-        petals.forEach(p => { p.update(); p.draw(); });
-        requestAnimationFrame(animate);
-    }
-    animate();
+        for (const p of ps) { p.u(); p.d(); }
+        requestAnimationFrame(loop);
+    })();
 
-    /* ======================
-       PARALLAX (very smooth)
-       ====================== */
-    const heroImg = document.querySelector('.hero-img');
-    let currentY = 0, targetY = 0;
+    /* ═══════════════════════
+       SMOOTH PARALLAX — lerp-based (silky)
+       ═══════════════════════ */
+    const heroImg = document.getElementById("hero-img");
+    let pTarget = 0, pCurrent = 0;
 
-    window.addEventListener('scroll', () => {
-        targetY = window.scrollY * 0.03;
-    }, { passive: true });
+    addEventListener("scroll", () => { pTarget = scrollY * 0.025; }, { passive: true });
 
-    function smoothParallax() {
-        currentY += (targetY - currentY) * 0.05;        // ← lerp for silky smooth
-        if (heroImg) {
-            heroImg.style.transform = `scale(${1 + currentY * 0.002}) translateY(${currentY}%)`;
-        }
-        requestAnimationFrame(smoothParallax);
-    }
-    smoothParallax();
+    (function parLoop() {
+        pCurrent += (pTarget - pCurrent) * 0.04;  // very slow lerp = silky
+        if (heroImg) heroImg.style.transform = `translateY(${pCurrent}%) scale(${1 + pCurrent * .001})`;
+        requestAnimationFrame(parLoop);
+    })();
 
-    /* ======================
+    /* ═══════════════════════
        FLIP CARD
-       ====================== */
-    const flipInner = document.getElementById('flip-inner');
-    document.getElementById('open-btn').addEventListener('click', () => {
-        flipInner.classList.add('flipped');
-    });
-    document.getElementById('close-btn').addEventListener('click', () => {
-        flipInner.classList.remove('flipped');
-    });
+       ═══════════════════════ */
+    const inner = document.getElementById("cardInner");
+    document.getElementById("openBtn").onclick  = () => inner.classList.add("open");
+    document.getElementById("closeBtn").onclick = () => inner.classList.remove("open");
 
-    /* ======================
-       SCROLL REVEAL
-       ====================== */
-    const reveals = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver(entries => {
+    /* ═══════════════════════
+       SCROLL REVEAL — IntersectionObserver
+       ═══════════════════════ */
+    const io = new IntersectionObserver(entries => {
         entries.forEach(e => {
-            if (e.isIntersecting) {
-                e.target.classList.add('visible');
-                observer.unobserve(e.target);
-            }
+            if (e.isIntersecting) { e.target.classList.add("show"); io.unobserve(e.target); }
         });
-    }, { threshold: 0.15 });
+    }, { threshold: .12 });
 
-    reveals.forEach(el => observer.observe(el));
+    document.querySelectorAll(".anim-up").forEach(el => io.observe(el));
 
-    /* ======================
+    /* ═══════════════════════
        INIT
-       ====================== */
-    applyLang();
+       ═══════════════════════ */
+    setLang();
 
 })();
