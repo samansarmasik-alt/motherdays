@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Parallax Effect
+    const parallaxBg = document.querySelector('.parallax-bg');
+    window.addEventListener('scroll', () => {
+        const scrolled = window.pageYOffset;
+        if (parallaxBg) {
+            parallaxBg.style.transform = `translateY(${-10 + (scrolled * 0.05)}%)`;
+        }
+    });
     // 1. Petal Animation
     const petalContainer = document.getElementById('petal-container');
     const petalCount = 30;

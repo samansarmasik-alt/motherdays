@@ -3,13 +3,16 @@
     --secondary-pink: #ffc3a0;
     --deep-rose: #d63384;
     --soft-white: #fff9f9;
-    --glass-bg: rgba(255, 255, 255, 0.15);
-    --glass-border: rgba(255, 255, 255, 0.3);
-    --text-dark: #4a4a4a;
-    --text-light: #6d6d6d;
+    --aurora-1: #ffafbd;
+    --aurora-2: #ffc3a0;
+    --aurora-3: #ffecd2;
+    --glass-bg: rgba(255, 255, 255, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.5);
+    --text-dark: #2d3436;
+    --text-light: #636e72;
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Outfit', sans-serif;
-    --transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+    --transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 .lang-switcher {
@@ -171,48 +174,72 @@ body::before {
     height: 100vh;
     width: 100%;
     position: relative;
-    background: url('assets/hero_bg.png') no-repeat center center/cover;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    color: white;
+    overflow: hidden;
 }
 
-.hero-overlay {
+.hero-bg-container {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(214, 51, 132, 0.3));
+    z-index: 1;
+}
+
+.parallax-bg {
+    width: 100%;
+    height: 120%;
+    object-fit: cover;
+    filter: brightness(0.9) saturate(1.2);
+    transform: translateY(-10%);
+    transition: transform 0.1s linear;
 }
 
 .hero-content {
     position: relative;
-    z-index: 2;
-    padding: 0 20px;
+    z-index: 10;
+    text-align: center;
+    max-width: 800px;
 }
 
 .hero h1 {
     font-family: var(--font-heading);
-    font-size: clamp(3rem, 10vw, 6rem);
+    font-size: clamp(4rem, 15vw, 10rem);
     font-weight: 700;
-    margin-bottom: 1rem;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-    animation: glowText 3s ease-in-out infinite alternate;
-}
-
-@keyframes glowText {
-    from { text-shadow: 0 0 10px rgba(255,255,255,0.3); }
-    to { text-shadow: 0 0 30px rgba(214,51,132,0.6), 0 0 50px rgba(214,51,132,0.4); }
+    line-height: 0.9;
+    margin-bottom: 2rem;
+    color: white;
+    text-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    mix-blend-mode: overlay;
 }
 
 .hero .subtitle {
-    font-size: 1.5rem;
-    font-weight: 300;
-    letter-spacing: 2px;
+    font-size: 1.2rem;
+    font-weight: 400;
+    letter-spacing: 5px;
     text-transform: uppercase;
+    color: white;
+    opacity: 0.8;
+}
+
+/* Stunning Glass Cards */
+.glass-card {
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 30px;
+    padding: 60px;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+    transition: var(--transition);
+}
+
+.glass-card:hover {
+    transform: translateY(-20px) scale(1.02);
+    box-shadow: 0 50px 100px rgba(214, 51, 132, 0.1);
 }
 
 /* Scroll Indicator */
@@ -326,22 +353,56 @@ body::before {
     margin-bottom: 30px;
 }
 
-/* Buttons */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Modern Buttons */
 .btn-primary {
-    background: linear-gradient(135deg, var(--primary-pink), var(--deep-rose));
-    color: white;
+    background: white;
+    color: var(--deep-rose);
     border: none;
-    padding: 12px 35px;
+    padding: 15px 40px;
     border-radius: 50px;
     font-size: 1.1rem;
+    font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
-    box-shadow: 0 10px 20px rgba(214, 51, 132, 0.2);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-primary::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+    transition: 0.5s;
+}
+
+.btn-primary:hover::before {
+    left: 100%;
 }
 
 .btn-primary:hover {
-    transform: scale(1.05);
-    box-shadow: 0 15px 30px rgba(214, 51, 132, 0.3);
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(255, 255, 255, 0.5);
+}
+
+/* Reasons Grid (Asymmetrical) */
+.reasons-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 40px;
+    align-items: start;
+}
+
+.reason-item:nth-child(even) {
+    margin-top: 50px;
 }
 
 .btn-secondary {
