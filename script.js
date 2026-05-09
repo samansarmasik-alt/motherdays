@@ -8,22 +8,68 @@ document.addEventListener('DOMContentLoaded', () => {
         createPetal();
     }
 
-    // Side Flowers Variety
-    const sideFlowers = ['🌸', '🌺', '🌷', '🌹', '🌻', '🌼'];
-    function createSideFlower(side) {
+    // CSS-based Growing Flowers
+    function createFlower(side) {
+        const container = document.querySelector(`.flower-container.${side}`) || document.createElement('div');
+        if (!container.parentElement) {
+            container.classList.add('flower-container', side);
+            document.body.appendChild(container);
+        }
+
         const flower = document.createElement('div');
-        flower.classList.add('side-flower', side);
-        flower.innerText = sideFlowers[Math.floor(Math.random() * sideFlowers.length)];
-        flower.style.left = side === 'left' ? (Math.random() * 5 - 2) + 'vw' : 'auto';
-        flower.style.right = side === 'right' ? (Math.random() * 5 - 2) + 'vw' : 'auto';
-        flower.style.animationDelay = (Math.random() * 1 + 0.5) + 's';
-        flower.style.fontSize = (Math.random() * 40 + 80) + 'px';
-        document.body.appendChild(flower);
+        flower.classList.add('flower');
+        
+        const delay = Math.random() * 1.5;
+        const stemHeight = Math.floor(Math.random() * 80 + 100);
+        
+        const stem = document.createElement('div');
+        stem.classList.add('stem');
+        stem.style.animationDelay = delay + 's';
+        stem.style.setProperty('--stem-height', stemHeight + 'px');
+
+        // Add leaves
+        for(let i=0; i<2; i++) {
+            const leaf = document.createElement('div');
+            leaf.classList.add('leaf', i % 2 === 0 ? 'left' : 'right');
+            leaf.style.bottom = (30 + i * 40) + 'px';
+            leaf.style.animationDelay = (delay + 0.5 + i * 0.3) + 's';
+            stem.appendChild(leaf);
+        }
+
+        const head = document.createElement('div');
+        head.classList.add('flower-head');
+        head.style.animationDelay = (delay + 1.2) + 's';
+        head.style.top = `-${stemHeight}px`;
+
+        // Create petals with varying colors
+        const petalColors = [
+            'radial-gradient(circle, #ffafbd, #ffc3a0)',
+            'radial-gradient(circle, #ff9a9e, #fecfef)',
+            'radial-gradient(circle, #ffecd2, #fcb69f)',
+            'radial-gradient(circle, #d63384, #ff007f)'
+        ];
+        const chosenGradient = petalColors[Math.floor(Math.random() * petalColors.length)];
+
+        for (let i = 0; i < 6; i++) {
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            petal.style.background = chosenGradient;
+            petal.style.transform = `translate(-50%, -100%) rotate(${i * 60}deg)`;
+            head.appendChild(petal);
+        }
+
+        const center = document.createElement('div');
+        center.classList.add('flower-center');
+        head.appendChild(center);
+
+        flower.appendChild(stem);
+        flower.appendChild(head);
+        container.appendChild(flower);
     }
 
-    for(let i=0; i<3; i++) {
-        createSideFlower('left');
-        createSideFlower('right');
+    for (let i = 0; i < 4; i++) {
+        createFlower('left');
+        createFlower('right');
     }
 
     function createPetal() {

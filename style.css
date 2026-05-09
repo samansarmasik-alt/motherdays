@@ -45,37 +45,103 @@ body {
     animation: fall linear infinite;
 }
 
-/* Side Growing Flowers */
-.side-flower {
+/* Side Growing Flowers (CSS Based) */
+.flower-container {
     position: fixed;
-    bottom: -50px;
-    font-size: 120px;
+    bottom: 0;
     z-index: 101;
-    opacity: 0;
-    filter: drop-shadow(0 10px 20px rgba(0,0,0,0.1));
     pointer-events: none;
+    display: flex;
+    align-items: flex-end;
 }
 
-.side-flower.left {
-    left: -30px;
-    animation: growFromSideLeft 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    animation-delay: 0.5s;
+.flower-container.left { left: 5vw; }
+.flower-container.right { right: 5vw; }
+
+.flower {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 10px;
 }
 
-.side-flower.right {
-    right: -30px;
-    animation: growFromSideRight 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-    animation-delay: 0.8s;
+.stem {
+    width: 4px;
+    height: 0;
+    background: linear-gradient(to top, #2d5a27, #4e9a06);
+    border-radius: 4px;
+    animation: growStem 2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
 
-@keyframes growFromSideLeft {
-    0% { transform: scale(0) rotate(-45deg); opacity: 0; bottom: -100px; }
-    100% { transform: scale(1) rotate(15deg); opacity: 1; bottom: 20px; }
+.flower-head {
+    position: absolute;
+    top: -40px;
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+    transform: scale(0);
+    animation: bloom 1s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
 }
 
-@keyframes growFromSideRight {
-    0% { transform: scale(0) rotate(45deg); opacity: 0; bottom: -100px; }
-    100% { transform: scale(1) rotate(-15deg); opacity: 1; bottom: 20px; }
+.petal {
+    position: absolute;
+    width: 25px;
+    height: 35px;
+    background: radial-gradient(circle, var(--primary-pink), var(--deep-rose));
+    border-radius: 50% 50% 50% 50% / 80% 80% 20% 20%;
+    top: 50%;
+    left: 50%;
+    transform-origin: bottom center;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.1);
+}
+
+.leaf {
+    position: absolute;
+    width: 20px;
+    height: 10px;
+    background: #4e9a06;
+    border-radius: 0 100% 0 100%;
+    opacity: 0;
+    animation: growLeaf 1s ease-out forwards;
+}
+
+.leaf.left {
+    left: -18px;
+    transform: rotate(-30deg);
+}
+
+.leaf.right {
+    right: -18px;
+    transform: rotate(30deg) scaleX(-1);
+}
+
+.flower-center {
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    background: #ffd700;
+    border-radius: 50%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+@keyframes growStem {
+    from { height: 0; }
+    to { height: var(--stem-height, 150px); }
+}
+
+@keyframes growLeaf {
+    0% { transform: scale(0) rotate(-30deg); opacity: 0; }
+    100% { transform: scale(1) rotate(-30deg); opacity: 1; }
+}
+
+@keyframes bloom {
+    0% { transform: scale(0) rotate(0deg); opacity: 0; }
+    100% { transform: scale(1) rotate(360deg); opacity: 1; }
 }
 
 @keyframes fall {
