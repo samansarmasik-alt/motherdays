@@ -8,69 +8,72 @@ document.addEventListener('DOMContentLoaded', () => {
         createPetal();
     }
 
-    // CSS-based Growing Flowers
-    function createFlower(side) {
-        const container = document.querySelector(`.flower-container.${side}`) || document.createElement('div');
-        if (!container.parentElement) {
-            container.classList.add('flower-container', side);
-            document.body.appendChild(container);
-        }
+    // SVG-based Vine Generation
+    function createVine(selector) {
+        const containers = document.querySelectorAll(selector);
+        containers.forEach(container => {
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("viewBox", "0 0 300 300");
+            svg.classList.add("vine-svg");
 
-        const flower = document.createElement('div');
-        flower.classList.add('flower');
+            const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            // A curvy vine path from (0,0)
+            const d = "M0,0 C50,100 150,50 200,200 S250,250 300,300";
+            path.setAttribute("d", d);
+            path.classList.add("vine-path");
+            
+            svg.appendChild(path);
+            container.appendChild(svg);
+
+            // Add flowers and leaves at intervals
+            for (let i = 0; i < 5; i++) {
+                const point = path.getPointAtLength(i * 60 + 20);
+                setTimeout(() => {
+                    addFlowerToVine(container, point.x, point.y);
+                    addLeafToVine(container, point.x, point.y);
+                }, 1000 + i * 400);
+            }
+        });
+    }
+
+    function addFlowerToVine(container, x, y) {
+        const flowerHead = document.createElement('div');
+        flowerHead.classList.add('vine-flower');
+        flowerHead.style.left = x + 'px';
+        flowerHead.style.top = y + 'px';
         
-        const delay = Math.random() * 1.5;
-        const stemHeight = Math.floor(Math.random() * 80 + 100);
-        
-        const stem = document.createElement('div');
-        stem.classList.add('stem');
-        stem.style.animationDelay = delay + 's';
-        stem.style.setProperty('--stem-height', stemHeight + 'px');
+        const petalColors = ['#ffafbd', '#ff9a9e', '#d63384', '#ffecd2'];
+        const color = petalColors[Math.floor(Math.random() * petalColors.length)];
 
-        // Add leaves
-        for(let i=0; i<2; i++) {
-            const leaf = document.createElement('div');
-            leaf.classList.add('leaf', i % 2 === 0 ? 'left' : 'right');
-            leaf.style.bottom = (30 + i * 40) + 'px';
-            leaf.style.animationDelay = (delay + 0.5 + i * 0.3) + 's';
-            stem.appendChild(leaf);
-        }
-
-        const head = document.createElement('div');
-        head.classList.add('flower-head');
-        head.style.animationDelay = (delay + 1.2) + 's';
-        head.style.top = `-${stemHeight}px`;
-
-        // Create petals with varying colors
-        const petalColors = [
-            'radial-gradient(circle, #ffafbd, #ffc3a0)',
-            'radial-gradient(circle, #ff9a9e, #fecfef)',
-            'radial-gradient(circle, #ffecd2, #fcb69f)',
-            'radial-gradient(circle, #d63384, #ff007f)'
-        ];
-        const chosenGradient = petalColors[Math.floor(Math.random() * petalColors.length)];
-
-        for (let i = 0; i < 6; i++) {
+        // Simple petal structure
+        for (let i = 0; i < 5; i++) {
             const petal = document.createElement('div');
             petal.classList.add('petal');
-            petal.style.background = chosenGradient;
-            petal.style.transform = `translate(-50%, -100%) rotate(${i * 60}deg)`;
-            head.appendChild(petal);
+            petal.style.width = '15px';
+            petal.style.height = '20px';
+            petal.style.background = color;
+            petal.style.transform = `translate(-50%, -100%) rotate(${i * 72}deg)`;
+            flowerHead.appendChild(petal);
         }
-
         const center = document.createElement('div');
         center.classList.add('flower-center');
-        head.appendChild(center);
-
-        flower.appendChild(stem);
-        flower.appendChild(head);
-        container.appendChild(flower);
+        center.style.width = '8px';
+        center.style.height = '8px';
+        flowerHead.appendChild(center);
+        
+        container.appendChild(flowerHead);
     }
 
-    for (let i = 0; i < 4; i++) {
-        createFlower('left');
-        createFlower('right');
+    function addLeafToVine(container, x, y) {
+        const leaf = document.createElement('div');
+        leaf.classList.add('vine-leaf');
+        leaf.style.left = (x + 10) + 'px';
+        leaf.style.top = (y + 10) + 'px';
+        leaf.style.transform = `rotate(${Math.random() * 360}deg)`;
+        container.appendChild(leaf);
     }
+
+    createVine('.vine-container');
 
     function createPetal() {
         const petal = document.createElement('div');
