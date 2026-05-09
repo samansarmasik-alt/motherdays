@@ -8,6 +8,24 @@ document.addEventListener('DOMContentLoaded', () => {
         createPetal();
     }
 
+    // Side Flowers Variety
+    const sideFlowers = ['🌸', '🌺', '🌷', '🌹', '🌻', '🌼'];
+    function createSideFlower(side) {
+        const flower = document.createElement('div');
+        flower.classList.add('side-flower', side);
+        flower.innerText = sideFlowers[Math.floor(Math.random() * sideFlowers.length)];
+        flower.style.left = side === 'left' ? (Math.random() * 5 - 2) + 'vw' : 'auto';
+        flower.style.right = side === 'right' ? (Math.random() * 5 - 2) + 'vw' : 'auto';
+        flower.style.animationDelay = (Math.random() * 1 + 0.5) + 's';
+        flower.style.fontSize = (Math.random() * 40 + 80) + 'px';
+        document.body.appendChild(flower);
+    }
+
+    for(let i=0; i<3; i++) {
+        createSideFlower('left');
+        createSideFlower('right');
+    }
+
     function createPetal() {
         const petal = document.createElement('div');
         petal.classList.add('petal');
