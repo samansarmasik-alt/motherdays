@@ -8,30 +8,100 @@ document.addEventListener('DOMContentLoaded', () => {
         createPetal();
     }
 
-    // SVG-based Vine Generation
+    // 1. Translations
+    const translations = {
+        tr: {
+            hero_title: "Canım Annem",
+            hero_subtitle: "Senin Sevginle Her Gün Bahar",
+            discover: "Keşfet",
+            card_front_title: "Senin İçin Bir Mesajım Var",
+            open_card: "Kartı Aç",
+            card_back_title: "Anneler Günün Kutlu Olsun!",
+            card_message: 'Akıllı değildin ama beni mutlu ettin <span class="emoji">😉</span>',
+            signature: "Sonsuz Sevgilerle, Senin Yavrun",
+            close_card: "Kapat",
+            reasons_title: "Neden Seni Çok Seviyorum?",
+            reason1_title: "Sonsuz Şefkatin",
+            reason1_desc: "Dizim her kanadığında, kalbim her kırıldığında yanımda olan tek kişi sensin.",
+            reason2_title: "Eşsiz Bilgeliğin",
+            reason2_desc: "Hayatın her anında bana doğru yolu gösteren ışığımsın.",
+            reason3_title: "Gülen Yüzün",
+            reason3_desc: "Gülümsemenle en karanlık günlerimi bile aydınlatıyorsun.",
+            gallery_title: "Güzel Anılar",
+            love_filled: "Sevgiyle Dolu",
+            gallery_text: "Seninle geçen her saniye, kalbimde sakladığım en değerli hazinem.",
+            footer_text: "&copy; 2026 - Dünyanın En İyi Annesine Sevgilerle"
+        },
+        en: {
+            hero_title: "My Dear Mother",
+            hero_subtitle: "With Your Love, Every Day is Spring",
+            discover: "Discover",
+            card_front_title: "I Have a Message for You",
+            open_card: "Open Card",
+            card_back_title: "Happy Mother's Day!",
+            card_message: 'You weren\'t smart but you made me happy <span class="emoji">😉</span>',
+            signature: "With Infinite Love, Your Child",
+            close_card: "Close",
+            reasons_title: "Why Do I Love You So Much?",
+            reason1_title: "Infinite Compassion",
+            reason1_desc: "You are the only one by my side whenever my knee bleeds or my heart breaks.",
+            reason2_title: "Unique Wisdom",
+            reason2_desc: "You are my light that shows me the right way in every moment of life.",
+            reason3_title: "Smiling Face",
+            reason3_desc: "You brighten even my darkest days with your smile.",
+            gallery_title: "Beautiful Memories",
+            love_filled: "Filled with Love",
+            gallery_text: "Every second spent with you is the most precious treasure I keep in my heart.",
+            footer_text: "&copy; 2026 - To the World's Best Mother with Love"
+        }
+    };
+
+    let currentLang = navigator.language.startsWith('tr') ? 'tr' : 'en';
+
+    function updateLanguage() {
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+            const key = el.getAttribute('data-i18n');
+            el.innerHTML = translations[currentLang][key];
+        });
+    }
+
+    document.getElementById('lang-btn').addEventListener('click', () => {
+        currentLang = currentLang === 'tr' ? 'en' : 'tr';
+        updateLanguage();
+    });
+
+    updateLanguage();
+
+    // 2. Spiraling SVG Vine Generation
     function createVine(selector) {
         const containers = document.querySelectorAll(selector);
-        containers.forEach(container => {
+        containers.forEach((container, idx) => {
             const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-            svg.setAttribute("viewBox", "0 0 300 300");
+            svg.setAttribute("viewBox", "0 0 500 500");
             svg.classList.add("vine-svg");
 
             const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-            // A curvy vine path from (0,0)
-            const d = "M0,0 C50,100 150,50 200,200 S250,250 300,300";
-            path.setAttribute("d", d);
+            // Spiraling path that covers more frame area
+            const d = "M0,0 C100,0 200,50 250,150 S400,100 500,200 S450,400 300,500 L0,500 Z"; // Dummy frame-like path
+            // Let's make it more "vine-like"
+            const vineD = "M0,0 C50,20 100,80 80,150 S150,250 100,350 S200,450 350,400 S450,500 500,500";
+            path.setAttribute("d", vineD);
             path.classList.add("vine-path");
             
             svg.appendChild(path);
             container.appendChild(svg);
 
-            // Add flowers and leaves at intervals
-            for (let i = 0; i < 5; i++) {
-                const point = path.getPointAtLength(i * 60 + 20);
+            const pathLength = path.getTotalLength();
+            path.style.strokeDasharray = pathLength;
+            path.style.strokeDashoffset = pathLength;
+
+            // Add flowers and leaves along the spiral
+            for (let i = 0; i < 8; i++) {
+                const point = path.getPointAtLength((i / 8) * pathLength);
                 setTimeout(() => {
-                    addFlowerToVine(container, point.x, point.y);
-                    addLeafToVine(container, point.x, point.y);
-                }, 1000 + i * 400);
+                    addFlowerToVine(container, point.x * 0.6, point.y * 0.6); // Scale to fit
+                    addLeafToVine(container, point.x * 0.6, point.y * 0.6);
+                }, 1000 + i * 300);
             }
         });
     }

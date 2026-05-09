@@ -12,6 +12,9 @@
 </head>
 <body>
     <div id="petal-container"></div>
+    <div class="lang-switcher">
+        <button id="lang-btn">TR / EN</button>
+    </div>
     <div class="vine-container top-left"></div>
     <div class="vine-container top-right"></div>
     <div class="vine-container bottom-left"></div>
@@ -20,10 +23,10 @@
     <header class="hero">
         <div class="hero-overlay"></div>
         <div class="hero-content">
-            <h1 class="reveal-text">Canım Annem</h1>
-            <p class="subtitle reveal-text">Senin Sevginle Her Gün Bahar</p>
+            <h1 class="reveal-text" data-i18n="hero_title">Canım Annem</h1>
+            <p class="subtitle reveal-text" data-i18n="hero_subtitle">Senin Sevginle Her Gün Bahar</p>
             <div class="scroll-indicator">
-                <span>Keşfet</span>
+                <span data-i18n="discover">Keşfet</span>
                 <div class="arrow"></div>
             </div>
         </div>
@@ -36,16 +39,16 @@
                     <div class="glass-card" id="main-card">
                         <div class="card-front">
                             <div class="floral-icon">🌸</div>
-                            <h2>Senin İçin Bir Mesajım Var</h2>
-                            <button id="open-card-btn" class="btn-primary">Kartı Aç</button>
+                            <h2 data-i18n="card_front_title">Senin İçin Bir Mesajım Var</h2>
+                            <button id="open-card-btn" class="btn-primary" data-i18n="open_card">Kartı Aç</button>
                         </div>
                         <div class="card-back hidden">
-                            <h3>Anneler Günün Kutlu Olsun!</h3>
-                            <p class="message joke-message">
+                            <h3 data-i18n="card_back_title">Anneler Günün Kutlu Olsun!</h3>
+                            <p class="message joke-message" data-i18n="card_message">
                                 Akıllı değildin ama beni mutlu ettin <span class="emoji">😉</span>
                             </p>
-                            <div class="signature">Sonsuz Sevgilerle, Senin Yavrun</div>
-                            <button id="close-card-btn" class="btn-secondary">Kapat</button>
+                            <div class="signature" data-i18n="signature">Sonsuz Sevgilerle, Senin Yavrun</div>
+                            <button id="close-card-btn" class="btn-secondary" data-i18n="close_card">Kapat</button>
                         </div>
                     </div>
                 </div>
@@ -54,22 +57,22 @@
 
         <section id="reasons" class="section">
             <div class="container">
-                <h2 class="section-title">Neden Seni Çok Seviyorum?</h2>
+                <h2 class="section-title" data-i18n="reasons_title">Neden Seni Çok Seviyorum?</h2>
                 <div class="reasons-grid">
                     <div class="reason-item reveal">
                         <div class="reason-icon">💖</div>
-                        <h3>Sonsuz Şefkatin</h3>
-                        <p>Dizim her kanadığında, kalbim her kırıldığında yanımda olan tek kişi sensin.</p>
+                        <h3 data-i18n="reason1_title">Sonsuz Şefkatin</h3>
+                        <p data-i18n="reason1_desc">Dizim her kanadığında, kalbim her kırıldığında yanımda olan tek kişi sensin.</p>
                     </div>
                     <div class="reason-item reveal">
                         <div class="reason-icon">✨</div>
-                        <h3>Eşsiz Bilgeliğin</h3>
-                        <p>Hayatın her anında bana doğru yolu gösteren ışığımsın.</p>
+                        <h3 data-i18n="reason2_title">Eşsiz Bilgeliğin</h3>
+                        <p data-i18n="reason2_desc">Hayatın her anında bana doğru yolu gösteren ışığımsın.</p>
                     </div>
                     <div class="reason-item reveal">
                         <div class="reason-icon">🌸</div>
-                        <h3>Gülen Yüzün</h3>
-                        <p>Gülümsemenle en karanlık günlerimi bile aydınlatıyorsun.</p>
+                        <h3 data-i18n="reason3_title">Gülen Yüzün</h3>
+                        <p data-i18n="reason3_desc">Gülümsemenle en karanlık günlerimi bile aydınlatıyorsun.</p>
                     </div>
                 </div>
             </div>
@@ -77,14 +80,14 @@
 
         <section id="gallery" class="section">
             <div class="container">
-                <h2 class="section-title">Güzel Anılar</h2>
+                <h2 class="section-title" data-i18n="gallery_title">Güzel Anılar</h2>
                 <div class="gallery-container">
                     <div class="gallery-item reveal">
                         <img src="assets/love_art.png" alt="Sevgi Sanatı">
-                        <div class="overlay"><span>Sevgiyle Dolu</span></div>
+                        <div class="overlay"><span data-i18n="love_filled">Sevgiyle Dolu</span></div>
                     </div>
                     <div class="gallery-text reveal">
-                        <p>Seninle geçen her saniye, kalbimde sakladığım en değerli hazinem.</p>
+                        <p data-i18n="gallery_text">Seninle geçen her saniye, kalbimde sakladığım en değerli hazinem.</p>
                     </div>
                 </div>
             </div>
@@ -92,7 +95,7 @@
     </main>
 
     <footer>
-        <p>&copy; 2026 - Dünyanın En İyi Annesine Sevgilerle</p>
+        <p data-i18n="footer_text">&copy; 2026 - Dünyanın En İyi Annesine Sevgilerle</p>
         <div class="footer-hearts">❤️ ❤️ ❤️</div>
     </footer>
 
